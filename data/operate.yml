@@ -1,0 +1,6 @@
+-
+  url:  /sys/log/page
+  method: post
+  data:
+    limit:  10
+    page: 1

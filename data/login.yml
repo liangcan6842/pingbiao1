@@ -1,0 +1,6 @@
+-
+  url:  /sys/log/page
+  method: post
+  data:
+    username: admin
+    password: 123456

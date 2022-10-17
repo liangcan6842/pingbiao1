@@ -1,0 +1,1 @@
+driver_path = 'D:\\Python3.10.4\\chromedriver.exe'

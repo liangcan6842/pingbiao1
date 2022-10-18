@@ -11,36 +11,51 @@ MINOR = 'minor'　　    次要缺陷(界面错误与ui需求不符)
 TRIVIAL = 'trivial'　　轻微缺陷(必须项无提示，或者提示不规范)　
 标记用例等级：@allure.severity(allure.severity_level.TRIVIAL)"""
 @allure.feature("业务系统")
-@allure.story("评标管理")
-@allure.description("评标项目添加修改")
+@allure.story("开标-监督人")
+@allure.description("保存")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_1_add_bid_project(get_token_fixture):
-    """评标项目添加修改"""
+def test_1_storage(get_token_fixture):
+    """保存"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
     data = {
-        # "id": 0,  #修改必传
-        "name": "1018评标项目",  #项目名称
-        "owner": "1018招标人",  #招标人
-        "openTime": "2022-10-18 15:15:10",  #评标时间
-        "place": "线上111",  #评标地点
-        "roomId": 2,  #评标室ID
-        "obidProjectId": 4  #开标项目id
+        "id": 2,  #主持人ID
+        "name": "1018监督人", #名称
+        "oexpired": "2022-10-25 14:08:00",  #开标时效时间
+        "eexpired": "2022-10-30 17:08:00",  #评标时效时间
+        "projectId": 4  #项目ID
     }
-    url = URL + "/bid/project/projectAdd"
+    url = URL + "/biz/supervisor/save"
     res = requests.post(url=url, headers=headers,json=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
 @allure.feature("业务系统")
-@allure.story("评标管理")
-@allure.description("分页查询")
-@allure.severity(allure.severity_level.MINOR)
-def test_2_paging_query(get_token_fixture):
-    """分页查询"""
+@allure.story("开标-监督人")
+@allure.description("删除")
+@allure.severity(allure.severity_level.CRITICAL)
+def test_2_delete_bid_open_supervisor(get_token_fixture):
+    """删除"""
+    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
+    headers = {
+        "Content-Type": "application/json;charset=utf8",
+        "Authorization": get_token_fixture
+    }
+    data = [3]
+    url = URL + "/biz/supervisor/delete"
+    res = requests.post(url=url, headers=headers,json=data).text
+    res = json.loads(res)
+    print(res)
+    assert res["code"] == 200
+@allure.feature("业务系统")
+@allure.story("开标-监督人")
+@allure.description("开标监督人分页查询")
+@allure.severity(allure.severity_level.NORMAL)
+def test_3_bid_open_supervisor_paging_query(get_token_fixture):
+    """开标监督人分页查询"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
@@ -49,16 +64,13 @@ def test_2_paging_query(get_token_fixture):
     data = {
         "page": 1,
         "limit": 10,
-        # "startTime": "", #开始时间
-        # "endTime": "", #结束时间
-        # "owner": 0, #招标人
-        # "name": 0  #项目名称
+        "bizProjectId":4 , #开标项目id
+        # "name": "" #名称
     }
-    url = URL + "/bid/project/page"
+    url = URL + "/biz/supervisor/page"
     res = requests.get(url=url, headers=headers,params=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
 
-if __name__ == '__main__':
-    pytest.mian()
+

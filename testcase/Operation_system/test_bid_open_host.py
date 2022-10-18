@@ -23,10 +23,10 @@ def test_1_add_bid_project_host(get_token_fixture):
     }
     data = {
         # "id": 0, #修改必填
-        "name": "1013576578主持人",
+        "name": "1018主持人",
         "oexpired": "2022-10-20 14:08:00", #开标时效时间
-        "eexpired": "2022-10-20 17:10:15", #评标时效时间
-        "projectId": 2  #开标项目id
+        "eexpired": "2022-10-25 17:10:15", #评标时效时间
+        "projectId": 4  #开标项目id
     }
     url = URL + "/biz/host/save"
     res = requests.post(url=url, headers=headers,json=data).text

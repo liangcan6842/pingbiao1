@@ -11,54 +11,57 @@ MINOR = 'minor'　　    次要缺陷(界面错误与ui需求不符)
 TRIVIAL = 'trivial'　　轻微缺陷(必须项无提示，或者提示不规范)　
 标记用例等级：@allure.severity(allure.severity_level.TRIVIAL)"""
 @allure.feature("业务系统")
-@allure.story("评标管理")
-@allure.description("评标项目添加修改")
+@allure.story("评标-评估报告")
+@allure.description("新增\修改评估报告")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_1_add_bid_project(get_token_fixture):
-    """评标项目添加修改"""
+def test_1_add_bid_evaluated_report_module(get_token_fixture):
+    """新增\修改评估报告"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
     data = {
-        # "id": 0,  #修改必传
-        "name": "1018评标项目",  #项目名称
-        "owner": "1018招标人",  #招标人
-        "openTime": "2022-10-18 15:15:10",  #评标时间
-        "place": "线上111",  #评标地点
-        "roomId": 2,  #评标室ID
-        "obidProjectId": 4  #开标项目id
+        "id": 2,   #修改必传
+        "status": 1,  #	状态,0:关闭,1:开启
+        "name": "评标项目评估模板1018",      #模板名
+        "template": "评估报告模板1"    #对应模板名
     }
-    url = URL + "/bid/project/projectAdd"
+    url = URL + "/bid/assessmentTemplate/save"
     res = requests.post(url=url, headers=headers,json=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
 @allure.feature("业务系统")
-@allure.story("评标管理")
-@allure.description("分页查询")
-@allure.severity(allure.severity_level.MINOR)
-def test_2_paging_query(get_token_fixture):
-    """分页查询"""
+@allure.story("评标-评估报告")
+@allure.description("评估报告列表")
+@allure.severity(allure.severity_level.NORMAL)
+def test_2_bid_evaluated_report_module_list(get_token_fixture):
+    """评估报告列表"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
-    data = {
-        "page": 1,
-        "limit": 10,
-        # "startTime": "", #开始时间
-        # "endTime": "", #结束时间
-        # "owner": 0, #招标人
-        # "name": 0  #项目名称
+    url = URL + "/bid/assessmentTemplate/getList"
+    res = requests.get(url=url, headers=headers).text
+    res = json.loads(res)
+    print(res)
+    assert res["code"] == 200
+@allure.feature("业务系统")
+@allure.story("评标-评估报告")
+@allure.description("评估报告模板详情")
+@allure.severity(allure.severity_level.MINOR)
+def test_3_bid_evaluated_report_module_detail(get_token_fixture):
+    """评估报告模板详情"""
+    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
+    headers = {
+        "Content-Type": "application/json;charset=utf8",
+        "Authorization": get_token_fixture
     }
-    url = URL + "/bid/project/page"
+    data = {"id":1 } #模板id
+    url = URL + "/bid/assessmentTemplate/details"
     res = requests.get(url=url, headers=headers,params=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
-
-if __name__ == '__main__':
-    pytest.mian()

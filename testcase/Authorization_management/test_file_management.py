@@ -10,46 +10,40 @@ NORMAL = 'normal'　　  一般缺陷(边界情况，格式错误)
 MINOR = 'minor'　　    次要缺陷(界面错误与ui需求不符)
 TRIVIAL = 'trivial'　　轻微缺陷(必须项无提示，或者提示不规范)　
 标记用例等级：@allure.severity(allure.severity_level.TRIVIAL)"""
-@allure.feature("业务系统")
-@allure.story("评标-主持人")
-@allure.description("评标主持人新增")
+@allure.feature("权限管理")
+@allure.story("文件管理")
+@allure.description("上传文件")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_1_add_bid_project_host(get_token_fixture):
-    """评标主持人新增"""
+def test_1_upload_file(get_token_fixture):
+    """上传文件"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
-        "Content-Type": "application/json;charset=utf8",
+        "Content-Type": "multipart/form-data;charset=utf8",
         "Authorization": get_token_fixture
     }
     data = {
-        # "id": 0, #修改必填
-        "name": "1018评标项目主持人",
-        "expired": "2022-10-25 17:10:15", #评标时效时间
-        "projectId": 13  #评标项目id
+        "file": 1
     }
-    url = URL + "/bid/host/save"
+    url = URL + "/sys/file/upload"
     res = requests.post(url=url, headers=headers,json=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
-@allure.feature("业务系统")
-@allure.story("评标-主持人")
-@allure.description("评标主持人分页查询")
+@allure.feature("权限管理")
+@allure.story("文件管理")
+@allure.description("下载查看")
 @allure.severity(allure.severity_level.NORMAL)
-def test_3_bid_open_host_paging_query(get_token_fixture):
-    """评标主持人分页查询"""
+def test_2_download_look(get_token_fixture):
+    """下载查看"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
-        "Content-Type": "application/json;charset=utf8",
+        "Content-Type": "multipart/form-data;charset=utf8",
         "Authorization": get_token_fixture
     }
     data = {
-        "page": 1,
-        "limit": 10,
-        "projectId":13 , #评标项目id
-        # "name": "" #名称
+        "id": 1
     }
-    url = URL + "/bid/host/page"
+    url = URL + "/sys/file/"
     res = requests.get(url=url, headers=headers,params=data).text
     res = json.loads(res)
     print(res)
@@ -57,15 +51,3 @@ def test_3_bid_open_host_paging_query(get_token_fixture):
 
 if __name__ == '__main__':
     pytest.main()
-
-
-
-
-
-
-
-
-
-
-
-

@@ -10,64 +10,68 @@ NORMAL = 'normal'　　  一般缺陷(边界情况，格式错误)
 MINOR = 'minor'　　    次要缺陷(界面错误与ui需求不符)
 TRIVIAL = 'trivial'　　轻微缺陷(必须项无提示，或者提示不规范)　
 标记用例等级：@allure.severity(allure.severity_level.TRIVIAL)"""
-@allure.feature("业务系统")
-@allure.story("开标-主持人")
-@allure.description("开标主持人新增")
-@allure.severity(allure.severity_level.CRITICAL)
-def test_1_add_bid_project_host(get_token_fixture):
-    """开标主持人新增"""
-    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
-    headers = {
-        "Content-Type": "application/json;charset=utf8",
-        "Authorization": get_token_fixture
-    }
-    data = {
-        # "id": 0, #修改必填
-        "name": "1018主持人",
-        "oexpired": "2022-10-20 14:08:00", #开标时效时间
-        "eexpired": "2022-10-25 17:10:15", #评标时效时间
-        "projectId": 4  #开标项目id
-    }
-    url = URL + "/biz/host/save"
-    res = requests.post(url=url, headers=headers,json=data).text
-    res = json.loads(res)
-    print(res)
-    assert res["code"] == 200
-@allure.feature("业务系统")
-@allure.story("开标-主持人")
-@allure.description("开标主持人删除")
-@allure.severity(allure.severity_level.CRITICAL)
-def test_2_delete_bid_open_host(get_token_fixture):
-    """开标主持人删除"""
-    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
-    headers = {
-        "Content-Type": "application/json;charset=utf8",
-        "Authorization": get_token_fixture
-    }
-    data = [3]
-    url = URL + "/biz/host/delete"
-    res = requests.post(url=url, headers=headers,json=data).text
-    res = json.loads(res)
-    print(res)
-    assert res["code"] == 200
-@allure.feature("业务系统")
-@allure.story("开标-主持人")
-@allure.description("开标主持人分页查询")
+@allure.feature("权限管理")
+@allure.story("地理位置查询")
+@allure.description("查询三级数据")
 @allure.severity(allure.severity_level.NORMAL)
-def test_3_bid_open_host_paging_query(get_token_fixture):
-    """开标主持人分页查询"""
+def test_1_query_three_data(get_token_fixture):
+    """查询三级数据"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
-    data = {
-        "page": 1,
-        "limit": 10,
-        "bizProjectId":2 , #开标项目id
-        # "name": "" #名称
+    url = URL + "/sys/tree"
+    res = requests.get(url=url, headers=headers).text
+    res = json.loads(res)
+    print(res)
+    assert res["code"] == 200
+@allure.feature("权限管理")
+@allure.story("地理位置查询")
+@allure.description("查询省份")
+@allure.severity(allure.severity_level.NORMAL)
+def test_2_query_province(get_token_fixture):
+    """查询省份"""
+    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
+    headers = {
+        "Content-Type": "application/json;charset=utf8",
+        "Authorization": get_token_fixture
     }
-    url = URL + "/biz/host/page"
+    url = URL + "/sys/province"
+    res = requests.get(url=url, headers=headers).text
+    res = json.loads(res)
+    print(res)
+    assert res["code"] == 200
+@allure.feature("权限管理")
+@allure.story("地理位置查询")
+@allure.description("查询城市")
+@allure.severity(allure.severity_level.NORMAL)
+def test_3_query_city(get_token_fixture):
+    """查询城市"""
+    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
+    headers = {
+        "Content-Type": "application/json;charset=utf8",
+        "Authorization": get_token_fixture
+    }
+    data = {"pid":110000 }
+    url = URL + "/sys/city"
+    res = requests.get(url=url, headers=headers,params=data).text
+    res = json.loads(res)
+    print(res)
+    assert res["code"] == 200
+@allure.feature("权限管理")
+@allure.story("地理位置查询")
+@allure.description("查询区县")
+@allure.severity(allure.severity_level.NORMAL)
+def test_4_query_county(get_token_fixture):
+    """查询区县"""
+    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
+    headers = {
+        "Content-Type": "application/json;charset=utf8",
+        "Authorization": get_token_fixture
+    }
+    data = {"pid":110101 }
+    url = URL + "/sys/county"
     res = requests.get(url=url, headers=headers,params=data).text
     res = json.loads(res)
     print(res)
@@ -75,15 +79,3 @@ def test_3_bid_open_host_paging_query(get_token_fixture):
 
 if __name__ == '__main__':
     pytest.main()
-
-
-
-
-
-
-
-
-
-
-
-

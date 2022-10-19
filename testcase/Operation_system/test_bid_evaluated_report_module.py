@@ -65,3 +65,6 @@ def test_3_bid_evaluated_report_module_detail(get_token_fixture):
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
+
+if __name__ == '__main__':
+    pytest.main()

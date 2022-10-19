@@ -10,34 +10,36 @@ NORMAL = 'normal'　　  一般缺陷(边界情况，格式错误)
 MINOR = 'minor'　　    次要缺陷(界面错误与ui需求不符)
 TRIVIAL = 'trivial'　　轻微缺陷(必须项无提示，或者提示不规范)　
 标记用例等级：@allure.severity(allure.severity_level.TRIVIAL)"""
-@allure.feature("业务系统")
-@allure.story("评标-投标人")
-@allure.description("新增投标人")
+@allure.feature("权限管理")
+@allure.story("配置管理")
+@allure.description("保存配置")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_1_add_bidder(get_token_fixture):
-    """新增投标人"""
+def test_1_save_configure(get_token_fixture):
+    """保存配置"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
     data = {
-        # "id": 0,  #投标人ID
-        "name": "1018评标项目投标人",
-        "bidOffer": '12000',  #投标报价（下浮费率）
-        "projectId": 13  #项目id
+        # "id": 0,
+        "status": 1,   #状态,0:关闭,1:开启
+        "name": "101943576357364567配置",    #配置名
+        "value": "b768c203039f455d245debfce2bad0fd",   #配置值
+        "category": "101453645019",  #分类
+        "key": "3426"        #配置键
     }
-    url = URL + "/bid/bidder/save"
+    url = URL + "/sys/config/save"
     res = requests.post(url=url, headers=headers,json=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
-@allure.feature("业务系统")
-@allure.story("评标-投标人")
-@allure.description("分页查询")
+@allure.feature("权限管理")
+@allure.story("配置管理")
+@allure.description("分页查询配置")
 @allure.severity(allure.severity_level.NORMAL)
-def test_2_paging_query(get_token_fixture):
-    """分页查询"""
+def test_1_paging_query_configure(get_token_fixture):
+    """分页查询配置"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
@@ -46,65 +48,48 @@ def test_2_paging_query(get_token_fixture):
     data = {
         "page": 1,
         "limit": 10,
-        "projectId": 13, #项目ID
-        # "name": 0  #项目名称
+        "name": "",
+        "category": ""
     }
-    url = URL + "/bid/bidder/page"
+    url = URL + "/sys/config/page"
     res = requests.get(url=url, headers=headers,params=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
-@allure.feature("业务系统")
-@allure.story("评标-投标人")
-@allure.description("删除投标人")
-@allure.severity(allure.severity_level.CRITICAL)
-def test_3_delete_bidder(get_token_fixture):
-    """删除投标人"""
-    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
-    headers = {
-        "Content-Type": "application/json;charset=utf8",
-        "Authorization": get_token_fixture
-    }
-    data = [6]
-    url = URL + "/bid/bidder/delete"
-    res = requests.post(url=url, headers=headers,json=data).text
-    res = json.loads(res)
-    print(res)
-    assert res["code"] == 200
-@allure.feature("业务系统")
-@allure.story("评标-投标人")
-@allure.description("导入投标人")
-@allure.severity(allure.severity_level.CRITICAL)
-def test_4_import_bidder(get_token_fixture):
-    """导入投标人"""
-    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
-    headers = {
-        "Content-Type": "multipart/form-data;charset=utf8",
-        "Authorization": get_token_fixture
-    }
-    data = {"id": 4}
-    files = {"file": ('1234.xlsx', open('C:\\Users\\Administrator\\Desktop\\pingbiao1\\data\\1234.xlsx', 'rb'), 'application/xls')}
-    url = URL + "/bid/bidder/import"
-    res = requests.post(url=url, headers=headers,params=data,files=files).text
-    res = json.loads(res)
-    print(res)
-    assert res["code"] == 200
-@allure.feature("业务系统")
-@allure.story("评标-投标人")
-@allure.description("导入模板下载")
+@allure.feature("权限管理")
+@allure.story("配置管理")
+@allure.description("查询配置")
 @allure.severity(allure.severity_level.NORMAL)
-def test_5_import_module_download(get_token_fixture):
-    """导入模板下载"""
+def test_1_query_configure(get_token_fixture):
+    """查询配置"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
-    url = URL + "/bid/bidder/template"
-    res = requests.get(url=url, headers=headers).text
+    data = {"id": 3}
+    url = URL + "/sys/config/view"
+    res = requests.get(url=url, headers=headers,params=data).text
+    res = json.loads(res)
+    print(res)
+    assert res["code"] == 200
+@allure.feature("权限管理")
+@allure.story("配置管理")
+@allure.description("删除配置")
+@allure.severity(allure.severity_level.CRITICAL)
+def test_1_delete_configure(get_token_fixture):
+    """删除配置"""
+    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
+    headers = {
+        "Content-Type": "application/json;charset=utf8",
+        "Authorization": get_token_fixture
+    }
+    data = [1]
+    url = URL + "/sys/config/delete"
+    res = requests.post(url=url, headers=headers,json=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
 
 if __name__ == '__main__':
-    pytest.mian()
+    pytest.main()

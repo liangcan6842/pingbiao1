@@ -56,7 +56,7 @@ def test_2_bid_evaluated_method_list_query(get_token_fixture):
 @allure.story("评标办法-初步评审配置")
 @allure.description("修改")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_2_alter_bid_evaluated_method(get_token_fixture):
+def test_3_alter_bid_evaluated_method(get_token_fixture):
     """修改"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
@@ -83,7 +83,7 @@ def test_2_alter_bid_evaluated_method(get_token_fixture):
 @allure.story("评标办法-初步评审配置")
 @allure.description("删除")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_2_alter_bid_evaluated_method(get_token_fixture):
+def test_4_delete_bid_evaluated_method(get_token_fixture):
     """删除"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
@@ -97,3 +97,5 @@ def test_2_alter_bid_evaluated_method(get_token_fixture):
     print(res)
     assert res["code"] == 200
 
+if __name__ == '__main__':
+    pytest.main()

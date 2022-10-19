@@ -10,80 +10,79 @@ NORMAL = 'normal'　　  一般缺陷(边界情况，格式错误)
 MINOR = 'minor'　　    次要缺陷(界面错误与ui需求不符)
 TRIVIAL = 'trivial'　　轻微缺陷(必须项无提示，或者提示不规范)　
 标记用例等级：@allure.severity(allure.severity_level.TRIVIAL)"""
-@allure.feature("业务系统")
-@allure.story("开标-主持人")
-@allure.description("开标主持人新增")
+@allure.feature("权限管理")
+@allure.story("用户登录接口")
+@allure.description("用户登录")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_1_add_bid_project_host(get_token_fixture):
-    """开标主持人新增"""
+def test_1_login_user(get_token_fixture):
+    """用户登录"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
     data = {
-        # "id": 0, #修改必填
-        "name": "1018主持人",
-        "oexpired": "2022-10-20 14:08:00", #开标时效时间
-        "eexpired": "2022-10-25 17:10:15", #评标时效时间
-        "projectId": 4  #开标项目id
+        "username": "test1019",
+        "password": "1234567",
+        "macCode": ""
     }
-    url = URL + "/biz/host/save"
+    url = URL + "/login"
     res = requests.post(url=url, headers=headers,json=data).text
     res = json.loads(res)
     print(res)
-    assert res["code"] == 200
-@allure.feature("业务系统")
-@allure.story("开标-主持人")
-@allure.description("开标主持人删除")
+
+@allure.feature("权限管理")
+@allure.story("用户登录接口")
+@allure.description("修改密码")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_2_delete_bid_open_host(get_token_fixture):
-    """开标主持人删除"""
+def test_2_alter_user_password(get_token_fixture):
+    """修改密码"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
-    data = [3]
-    url = URL + "/biz/host/delete"
+    data = {
+        "oldPassword": "123456",
+        "newPassword": "123456"
+    }
+    url = URL + "/cp"
     res = requests.post(url=url, headers=headers,json=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
-@allure.feature("业务系统")
-@allure.story("开标-主持人")
-@allure.description("开标主持人分页查询")
+@allure.feature("权限管理")
+@allure.story("用户登录接口")
+@allure.description("查询个人信息")
 @allure.severity(allure.severity_level.NORMAL)
-def test_3_bid_open_host_paging_query(get_token_fixture):
-    """开标主持人分页查询"""
+def test_3_query_personal_message(get_token_fixture):
+    """查询个人信息"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
-    data = {
-        "page": 1,
-        "limit": 10,
-        "bizProjectId":2 , #开标项目id
-        # "name": "" #名称
+    url = URL + "/profile"
+    res = requests.get(url=url, headers=headers).text
+    res = json.loads(res)
+    print(res)
+    assert res["code"] == 200
+@allure.feature("权限管理")
+@allure.story("用户登录接口")
+@allure.description("查询我的权限")
+@allure.severity(allure.severity_level.NORMAL)
+def test_4_query_my_authorization(get_token_fixture):
+    """查询我的权限"""
+    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
+    headers = {
+        "Content-Type": "application/json;charset=utf8",
+        "Authorization": get_token_fixture
     }
-    url = URL + "/biz/host/page"
-    res = requests.get(url=url, headers=headers,params=data).text
+    url = URL + "/menus"
+    res = requests.get(url=url, headers=headers).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
 
 if __name__ == '__main__':
     pytest.main()
-
-
-
-
-
-
-
-
-
-
-
-

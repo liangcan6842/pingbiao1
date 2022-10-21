@@ -1,0 +1,1 @@
+{'msg': 'could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement', 'code': '500'}

@@ -98,8 +98,9 @@ def test_4_alter_menu(get_token_fixture):
         "Authorization": get_token_fixture
     }
     data = {
+        "id":54,
         "status": 1,  #	状态,0:关闭,1:开启
-        "name": "1019测试菜单",    #菜单名称
+        "name": "1021测试菜单",    #菜单名称
         "level": 2,   #权限等级(1:目录,2:菜单,3:按钮)
         # "parentId": 0,  #父级ID
         # "path": "",     #路由
@@ -124,9 +125,9 @@ def test_5_delete_menu(get_token_fixture):
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
-    data = {"id":2}
+    data = [2]
     url = URL + "/sys/menu/delete"
-    res = requests.post(url=url, headers=headers,params=data).text
+    res = requests.post(url=url, headers=headers,json=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200

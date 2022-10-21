@@ -22,10 +22,10 @@ def test_1_sign_in(get_token_fixture):
         "Authorization": get_token_fixture
     }
     data = {
-        "realName": "1019开标监督人签到",       #姓名
+        "realName": "1018监督人",       #姓名
         "organization": "重庆",  #工作单位
         "mobile": "18812341234",        #联系电话
-        "remark": "监督人签到"         #备注
+        "remark": "1018监督人签到"         #备注
     }
     url = URL + "/dst/bido/supe/signin"
     res = requests.post(url=url, headers=headers,json=data).text

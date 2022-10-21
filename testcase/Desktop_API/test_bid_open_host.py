@@ -22,7 +22,7 @@ def test_1_signature(get_token_fixture):
         "Authorization": get_token_fixture
     }
     data = {
-        "signImage": "1019开标主持人人签名图片432654277",       #签名图片
+        "signImage": "1018主持人签名图片",       #签名图片
     }
     url = URL + "/dst/bido/host/sign"
     res = requests.post(url=url, headers=headers,json=data).text

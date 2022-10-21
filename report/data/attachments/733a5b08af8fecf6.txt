@@ -1,0 +1,1 @@
+{'code': 200, 'msg': '成功', 'count': 1, 'data': [{'id': 1, 'status': 1, 'createTime': '2022-10-20 09:48:21', 'updateTime': '2022-10-20 09:48:21', 'createBy': None, 'updateBy': None, 'deleted': 0, 'projectId': 13, 'supervisorId': 6, 'name': '1018评标监督人', 'company': '重庆永投集团', 'phone': '13212341234', 'remark': '评标监督人签到'}]}

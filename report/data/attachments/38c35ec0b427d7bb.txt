@@ -1,0 +1,1 @@
+{'msg': 'query did not return a unique result: 5; nested exception is javax.persistence.NonUniqueResultException: query did not return a unique result: 5', 'code': '500'}

@@ -1,0 +1,1 @@
+{'code': 200, 'msg': '成功', 'count': 1, 'data': [{'id': 8, 'status': 1, 'createTime': '2022-10-18 17:18:05', 'updateTime': '2022-10-18 17:18:05', 'createBy': '10000', 'updateBy': None, 'deleted': 0, 'name': '1018投标人', 'projectId': 18, 'bidOffer': None, 'state': 2, 'openTime': None, 'list': None}]}

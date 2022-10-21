@@ -1,0 +1,1 @@
+{'code': 200, 'msg': '成功', 'count': 1, 'data': {'id': 4, 'name': '开标项目1018', 'place': '重庆市', 'owner': '1018招标人', 'openTime': '2022-10-17 14:00', 'createTime': '2022-10-18 09:45', 'roomId': 1, 'roomName': '测试开标室', 'templateId': 14, 'templateName': '模板一', 'state': None}}

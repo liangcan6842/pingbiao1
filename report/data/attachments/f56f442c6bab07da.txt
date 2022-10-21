@@ -1,0 +1,1 @@
+{'code': 200, 'msg': '成功', 'count': 2, 'data': [{'id': 1, 'status': 1, 'createTime': None, 'updateTime': '2022-10-20 16:11:17', 'createBy': '10000', 'updateBy': '10000', 'deleted': 0, 'name': '评标办法一'}, {'id': 2, 'status': 1, 'createTime': None, 'updateTime': None, 'createBy': None, 'updateBy': None, 'deleted': 0, 'name': '评标办法二'}]}

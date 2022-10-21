@@ -1,0 +1,1 @@
+{'msg': "org.hibernate.hql.internal.ast.QuerySyntaxException: Invalid path: 'bizEbidBidder.name' [select bizEbidVeto.bidderId, bizEbidBidder.name, bizEbidVeto.reason, bizEbidVeto.other, bizEbidVeto.remark\nfrom com.pwt.entity.BizEbidVeto bizEbidVeto\nwhere bizEbidVeto.projectId = ?1]", 'code': '500'}

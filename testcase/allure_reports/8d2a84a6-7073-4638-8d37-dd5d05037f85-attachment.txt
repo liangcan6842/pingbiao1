@@ -1,0 +1,1 @@
+{'code': 200, 'msg': '成功', 'count': 1, 'data': {'id': 20, 'status': 1, 'createTime': '2022-10-21 13:03:51', 'updateTime': '2022-10-21 13:03:51', 'createBy': '10000', 'updateBy': None, 'deleted': None, 'content': 2, 'serialNumber': 2, 'reviewFactor': '根据评标资格分数', 'reviewStandard': '4365478', 'scoreType': '统一打分', 'required': 1, 'projectId': 18, 'nodeId': 1}}

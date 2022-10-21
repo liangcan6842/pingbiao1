@@ -23,13 +23,14 @@ def test_1_add_bid_evaluated_method(get_token_fixture):
     }
     data = {
         "status": 1,           #状态,0:关闭,1:开启
-        "content": 1,          #内容:1-形式评审，2-资格评审，3-响应性评审
-        "serialNumber": 1,     #	序号
-        "reviewFactor": "根据评标436254项目周期质量竞价分数",    #评审因素
-        "reviewStandard": "65773566",  #评审标准
+        "content": 2,          #内容:1-形式评审，2-资格评审，3-响应性评审
+        "serialNumber": 2,     #	序号
+        "reviewFactor": "根据评标资格分数",    #评审因素
+        "reviewStandard": "4365478",  #评审标准
         "scoreType": "统一打分",       #打分方式：统一打分
         "required": 1,         #0-否，1-是
-        "projectId": 13         #关联项目id
+        "projectId": 18,         #关联项目id
+        "nodeId": 1
     }
     url = URL + "/v1/bidReviewPreliminary/add"
     res = requests.post(url=url, headers=headers,json=data).text
@@ -47,8 +48,12 @@ def test_2_bid_evaluated_method_list_query(get_token_fixture):
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
+    data = {
+        "projectId":13,
+        "nodeId":2
+    }
     url = URL + "/v1/bidReviewPreliminary/list"
-    res = requests.get(url=url, headers=headers).text
+    res = requests.get(url=url, headers=headers,params=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
@@ -72,7 +77,8 @@ def test_3_alter_bid_evaluated_method(get_token_fixture):
         "reviewStandard": "236456",  #评审标准
         "scoreType": "同意打分",  #
         "required": 1,  #0-否，1-是
-        "projectId": 8  #关联项目id
+        "projectId": 18,  #关联项目id
+        "nodeId": 2  #评标办法id
     }
     url = URL + "/v1/bidReviewPreliminary/update"
     res = requests.post(url=url, headers=headers,json=data).text
@@ -90,9 +96,9 @@ def test_4_delete_bid_evaluated_method(get_token_fixture):
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
-    data = {"id": 6}
+    data = [6]
     url = URL + "/v1/bidReviewPreliminary/delete"
-    res = requests.post(url=url, headers=headers,params=data).text
+    res = requests.post(url=url, headers=headers,json=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200

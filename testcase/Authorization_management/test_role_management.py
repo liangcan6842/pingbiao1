@@ -109,9 +109,9 @@ def test_5_delete_role(get_token_fixture):
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
-    data = {"id": 9 }
+    data = [9]
     url = URL + "/sys/role/delete"
-    res = requests.post(url=url, headers=headers,params=data).text
+    res = requests.post(url=url, headers=headers,json=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
@@ -165,5 +165,6 @@ def test_8_query_role_list(get_token_fixture):
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
+
 if __name__ == '__main__':
     pytest.main()

@@ -11,62 +11,44 @@ MINOR = 'minor'　　    次要缺陷(界面错误与ui需求不符)
 TRIVIAL = 'trivial'　　轻微缺陷(必须项无提示，或者提示不规范)　
 标记用例等级：@allure.severity(allure.severity_level.TRIVIAL)"""
 @allure.feature("桌面端")
-@allure.story("开标监督人端")
-@allure.description("签到")
+@allure.story("评标主持人端")
+@allure.description("添加评委决议")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_1_sign_in(get_token_fixture):
-    """签到"""
+def test_1_add_judge_resolution(get_token_fixture):
+    """添加评委决议"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
     data = {
-        "realName": "1018监督人",       #姓名
-        "organization": "重庆",  #工作单位
-        "mobile": "18812341234",        #联系电话
-        "remark": "1018监督人签到"         #备注
+        "projectId": 13,   #项目id
+        "title": "1020关于评标决议",      #标题
+        "content": "决议通过会议上讨论的各项事项、决定"      #内容
     }
-    url = URL + "/dst/bido/supe/signin"
+    url = URL + "/dst/bid/host/addDecision"
     res = requests.post(url=url, headers=headers,json=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
 @allure.feature("桌面端")
-@allure.story("开标监督人端")
-@allure.description("签字")
-@allure.severity(allure.severity_level.CRITICAL)
-def test_2_signature(get_token_fixture):
-    """签字"""
+@allure.story("评标主持人端")
+@allure.description("选择负责人")
+@allure.severity(allure.severity_level.NORMAL)
+def test_1_chose_responsible_person(get_token_fixture):
+    """选择负责人"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
-    data = {
-        "signImage": "1019开标监督人签字图片",       #签名图片
-    }
-    url = URL + "/dst/bido/supe/sign"
-    res = requests.post(url=url, headers=headers,json=data).text
+    url = URL + "/dst/bid/host/addCharge"
+    res = requests.post(url=url, headers=headers).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
-@allure.feature("桌面端")
-@allure.story("开标监督人端")
-@allure.description("查看开标记录表")
-@allure.severity(allure.severity_level.MINOR)
-def test_2_look_bid_open_record_sheet(get_token_fixture):
-    """查看开标记录表"""
-    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
-    headers = {
-        "Content-Type": "application/json;charset=utf8",
-        "Authorization": get_token_fixture
-    }
-    url = URL + "/dst/bido/supe/create"
-    res = requests.get(url=url, headers=headers).text
-    res = json.loads(res)
-    print(res)
-    assert res["code"] == 200
+
+
 
 if __name__ == '__main__':
     pytest.main()

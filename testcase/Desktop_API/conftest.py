@@ -12,9 +12,9 @@ def get_token_fixture():
     headers = {"Content-Type": "application/json;charset=utf8"}
     url = URL + "/dst/login"
     data = {
-        "username": "h1429775",
-        "password": "6YUUWmuj",
-        "macCode": "123456"
+        "username": "j2null30204",
+        "password": "TbLrPMMn",
+        "macCode": "10181234"
     }
     res = requests.post(url=url, headers=headers, json=data).text
     res = json.loads(res)

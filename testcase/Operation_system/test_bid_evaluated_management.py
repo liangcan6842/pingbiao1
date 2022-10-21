@@ -37,9 +37,30 @@ def test_1_add_bid_project(get_token_fixture):
     assert res["code"] == 200
 @allure.feature("业务系统")
 @allure.story("评标管理")
+@allure.description("评估报告模板绑定")
+@allure.severity(allure.severity_level.CRITICAL)
+def test_2_evaluated_report_module(get_token_fixture):
+    """评估报告模板绑定"""
+    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
+    headers = {
+        "Content-Type": "application/json;charset=utf8",
+        "Authorization": get_token_fixture
+    }
+    data = {
+        "projectId": 13,  #项目id
+        "templateId": 2  #评估报告模板id
+    }
+    url = URL + "/bid/project/addTemplateId"
+    res = requests.get(url=url, headers=headers,params=data).text
+    res = json.loads(res)
+    print(res)
+    assert res["code"] == 200
+
+@allure.feature("业务系统")
+@allure.story("评标管理")
 @allure.description("分页查询")
 @allure.severity(allure.severity_level.MINOR)
-def test_2_paging_query(get_token_fixture):
+def test_3_paging_query(get_token_fixture):
     """分页查询"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {

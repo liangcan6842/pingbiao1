@@ -11,97 +11,95 @@ MINOR = 'minor'　　    次要缺陷(界面错误与ui需求不符)
 TRIVIAL = 'trivial'　　轻微缺陷(必须项无提示，或者提示不规范)　
 标记用例等级：@allure.severity(allure.severity_level.TRIVIAL)"""
 @allure.feature("业务系统")
-@allure.story("评标办法-初步评审配置")
-@allure.description("新增")
+@allure.story("评标办法-流程配置")
+@allure.description("选择评标办法")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_1_add_bid_evaluated_method(get_token_fixture):
-    """新增"""
+def test_1_chose_bid_evaluated_method(get_token_fixture):
+    """选择评标办法"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
     data = {
-        "status": 1,           #状态,0:关闭,1:开启
-        "content": 2,          #内容:1-形式评审，2-资格评审，3-响应性评审
-        "serialNumber": 2,     #	序号
-        "reviewFactor": "根据评标资格分数",    #评审因素
-        "reviewStandard": "4365478",  #评审标准
-        "scoreType": "统一打分",       #打分方式：统一打分
-        "required": 1,         #0-否，1-是
-        "projectId": 18,         #关联项目id
-        "nodeId": 1
+        "configId": 2,           #评标办法流程配置id
+        "projectId": 13          #评标项目id
     }
-    url = URL + "/v1/bidReviewPreliminary/add"
-    res = requests.post(url=url, headers=headers,json=data).text
-    res = json.loads(res)
-    print(res)
-    assert res["code"] == 200
-@allure.feature("业务系统")
-@allure.story("评标办法-初步评审配置")
-@allure.description("列表查询")
-@allure.severity(allure.severity_level.NORMAL)
-def test_2_bid_evaluated_method_list_query(get_token_fixture):
-    """列表查询"""
-    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
-    headers = {
-        "Content-Type": "application/json;charset=utf8",
-        "Authorization": get_token_fixture
-    }
-    data = {
-        "projectId":13,
-        "nodeId":2
-    }
-    url = URL + "/v1/bidReviewPreliminary/list"
+    url = URL + "/v1/bidMethodConfig/project"
     res = requests.get(url=url, headers=headers,params=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
 @allure.feature("业务系统")
-@allure.story("评标办法-初步评审配置")
-@allure.description("修改")
+@allure.story("评标办法-流程配置")
+@allure.description("拷贝评标办法")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_3_alter_bid_evaluated_method(get_token_fixture):
-    """修改"""
+def test_2_copy_bid_evaluated_method(get_token_fixture):
+    """拷贝评标办法"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
     data = {
-        "id": 4,
-        "status": 1,  #状态,0:关闭,1:开启
-        "content": 2,  #内容:1-形式评审，2-资格评审，3-响应性评审
-        "serialNumber": 2,  ##	序号
-        "reviewFactor": "质量",  #评审因素
-        "reviewStandard": "236456",  #评审标准
-        "scoreType": "同意打分",  #
-        "required": 1,  #0-否，1-是
-        "projectId": 18,  #关联项目id
-        "nodeId": 2  #评标办法id
+        "projectId": 13,               #当前评标项目id
+        "copyProjectId": 18            #拷贝项目id
     }
-    url = URL + "/v1/bidReviewPreliminary/update"
-    res = requests.post(url=url, headers=headers,json=data).text
+    url = URL + "/v1/bidMethodConfig/project/copy"
+    res = requests.get(url=url, headers=headers,params=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
 @allure.feature("业务系统")
-@allure.story("评标办法-初步评审配置")
-@allure.description("删除")
+@allure.story("评标办法-流程配置")
+@allure.description("启动禁用")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_4_delete_bid_evaluated_method(get_token_fixture):
-    """删除"""
+def test_3_setup_disable(get_token_fixture):
+    """启动禁用"""
     # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
     headers = {
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
-    data = [6]
-    url = URL + "/v1/bidReviewPreliminary/delete"
-    res = requests.post(url=url, headers=headers,json=data).text
+    data = {
+        "id": 1,               #评标办法id
+        "state": 1             #状态1 启动，0-禁用
+    }
+    url = URL + "/v1/bidMethodConfig/update"
+    res = requests.get(url=url, headers=headers,params=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
-
-if __name__ == '__main__':
-    pytest.main()
+@allure.feature("业务系统")
+@allure.story("评标办法-流程配置")
+@allure.description("表格查询")
+@allure.severity(allure.severity_level.CRITICAL)
+def test_4_query_sheet(get_token_fixture):
+    """表格查询"""
+    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
+    headers = {
+        "Content-Type": "application/json;charset=utf8",
+        "Authorization": get_token_fixture
+    }
+    url = URL + "/v1/bidMethodConfig/list"
+    res = requests.get(url=url, headers=headers).text
+    res = json.loads(res)
+    print(res)
+    assert res["code"] == 200
+@allure.feature("业务系统")
+@allure.story("评标办法-流程配置")
+@allure.description("根据id查询")
+@allure.severity(allure.severity_level.CRITICAL)
+def test_5_recordId_query(get_token_fixture):
+    """根据id查询"""
+    # 通过Fixture函数获取get_token_fixture值，即token，再将token添加到请求头中
+    headers = {
+        "Content-Type": "application/json;charset=utf8",
+        "Authorization": get_token_fixture
+    }
+    data = {"id":2 } #评标办法id
+    url = URL + "/v1/bidMethodConfig/id"
+    res = requests.get(url=url, headers=headers,params=data).text
+    res = json.loads(res)
+    print(res)
+    assert res["code"] == 200

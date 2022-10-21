@@ -23,15 +23,16 @@ def test_1_add_bid_evaluated_method(get_token_fixture):
     }
     data = {
         "status": 1,        #	状态,0:关闭,1:开启
-        "type": 1,          #1-详细评审，2-商务评审，3-技术评审
-        "name": "专业程度打分",         #评分项名称
+        "type": 3,          #1-详细评审，2-商务评审，3-技术评审
+        "name": "技术评审",         #评分项名称
         "serialNumber": 1,       #序号
         "reviewStandard": "平均分达到70分即通过",    #评审标准
         "scoreType": "直接打分",        #打分方式：直接打分
         "unifiedScore": 1,      #是否检验统一打分：1-是，0-否
         "minScore": 65,              #最低分
-        "maxScore": 85,          #最高分
-        "projectId": 13          #项目id
+        "maxScore": 80,          #最高分
+        "projectId": 13,          #项目id
+        "nodeId": 2
     }
     url = URL + "/v1/bidReviewDetail/add"
     res = requests.post(url=url, headers=headers,json=data).text
@@ -49,8 +50,12 @@ def test_2_bid_evaluated_method_list_query(get_token_fixture):
         "Content-Type": "application/json;charset=utf8",
         "Authorization": get_token_fixture
     }
+    data = {
+        "projectId":13,   #项目id
+        "nodeId":2      #评审办法
+    }
     url = URL + "/v1/bidReviewDetail/list"
-    res = requests.get(url=url, headers=headers).text
+    res = requests.get(url=url, headers=headers,params=data).text
     res = json.loads(res)
     print(res)
     assert res["code"] == 200
@@ -66,17 +71,18 @@ def test_3_alter_bid_evaluated_method(get_token_fixture):
         "Authorization": get_token_fixture
     }
     data = {
-        "id": 24,
+        "id": 29,
         "status": 1,        #	状态,0:关闭,1:开启
-        "type": 3,          #1-详细评审，2-商务评审，3-技术评审
-        "name": "技术等级打分",         #评分项名称
+        "type": 1,          #1-详细评审，2-商务评审，3-技术评审
+        "name": "详细评审",         #评分项名称
         "serialNumber": 2,       #序号
         "reviewStandard": "平均分达到70分即通过",    #评审标准
         "scoreType": "直接打分",        #打分方式：直接打分
         "unifiedScore": 1,      #是否检验统一打分：1-是，0-否
         "minScore": 68,              #最低分
         "maxScore": 90,          #最高分
-        "projectId": 13          #项目id
+        "projectId": 13,          #项目id
+        "nodeId": 2          #评标办法
     }
     url = URL + "/v1/bidReviewDetail/update"
     res = requests.post(url=url, headers=headers,json=data).text
